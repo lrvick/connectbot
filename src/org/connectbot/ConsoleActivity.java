@@ -56,6 +56,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View.OnClickListener;
@@ -276,17 +277,15 @@ public class ConsoleActivity extends Activity {
         hardKeyboard = hardKeyboard && !Build.MODEL.equals("Transformer TF101");
         hardKeyboard = hardKeyboard && !Build.MODEL.equals("Transformer Prime");
 
-
-        this.setContentView(R.layout.act_console);
-
         clipboard = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         // hide status bar if requested by user
         if (prefs.getBoolean(PreferenceConstants.FULLSCREEN, false)) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
+
+        this.setContentView(R.layout.act_console);
 
         // TODO find proper way to disable volume key beep if it exists.
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
